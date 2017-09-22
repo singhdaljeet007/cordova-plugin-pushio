@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="cordova-plugin-pushio"
+    version="1.0.0">
+    <name>Cordova Plugin pushio</name>
+    <description></description>
+    <license>MIT</license>
+    <keywords></keywords>
+ 
+
+    <!-- android -->
+    <platform name="android">
+      <js-module src="www/plugin.js" name="plugin">
+        <runs/>
+
+        <!-- This is the window variable name you want, like window.pushio -->
+        <clobbers target="pushio" />
+      </js-module>
+      <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="pushio">
+          <param name="android-package" value="com.pushio.PushIoUtils" />
+          <param name="onload" value="true" />
+        </feature>
+      </config-file>
+
+      <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+            <permission android:name="com.BajajServiceApp.VikramUAT.permission.PUSHIO_MESSAGE" android:protectionLevel="signature" />
+            <uses-permission android:name="com.BajajServiceApp.VikramUAT.permission.PUSHIO_MESSAGE" />
+            <permission android:name="com.BajajServiceApp.VikramUAT.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+        </config-file>
+        <config-file parent="./application" target="AndroidManifest.xml">
+            <receiver android:name="com.pushio.manager.PushIOBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                    <category android:name="com.BajajServiceApp.VikramUAT" />
+                </intent-filter>
+            </receiver>
+            <activity android:exported="true" android:name="com.pushio.manager.PushIOActivityLauncher" />
+            <service android:name="com.pushio.manager.PushIOGCMIntentService" />
+            <service android:name="com.pushio.manager.PushIOEngagementService" />
+            <service android:exported="false" android:name="com.pushio.manager.PIOGCMRegistrationIntentService" />
+            <service android:exported="false" android:name="com.pushio.manager.PIOInstanceIDListenerService">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.iid.InstanceID" />
+                </intent-filter>
+            </service>
+            <receiver android:enabled="true" android:exported="false" android:name="com.pushio.manager.PushIOUriReceiver">
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <data android:scheme="pio-NrX3WTrgJA_gtNg" />
+                </intent-filter>
+            </receiver>
+			<receiver
+            android:name="com.BajajServiceApp.VikramUAT.NotificationBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action  android:name="com.BajajServiceApp.VikramUAT.PUSHIOPUSH"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+			
+			
+        </config-file>
+	  
+	  <source-file src="src/android/com/pushio/PushIoUtils.java" target-dir="src/com/pushio/" />
+	  <source-file src="src/android/com/pushio/NotificationBroadcastReceiver.java" target-dir="src/com/BajajServiceApp/VikramUAT/" />
+      <source-file src="src/android/com/pushio/DBHelper.java" target-dir="src/com/BajajServiceApp/VikramUAT/" />
+	  <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"  />
+	  <source-file src="src/android/com/pushio/PushIOManager.aar" target-dir="libs"/>
+	  <source-file src="src/android/com/pushio/pushio_config.json" target-dir="assets"/>
+	  
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <js-module src="www/plugin.js" name="plugin">
+            <runs/>
+            <clobbers target="pushio" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
+            <feature name="pushio">
+                <param name="ios-package" value="pushio" onload="true" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/pushio.h" />
+        <source-file src="src/ios/pushio.m" />
+    </platform>
+</plugin>

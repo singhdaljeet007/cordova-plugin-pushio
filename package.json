@@ -1,0 +1,12 @@
+{
+  "name": "cordova-plugin-pushio",
+  "version": "1.0.0",
+  "cordova": {
+    "id": "cordova-plugin-pushio",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "description": "A pushio plugin for a Cordova"
+}
