@@ -20,12 +20,15 @@ public class PushIoUtils extends CordovaPlugin {
   
 
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+    try{
     super.initialize(cordova, webView);
-
-    //Log.d(TAG, "Initializing PushIoPlugin");
+    }catch(Exception ex){
+      Log.d("error in Initializing PushIoPlugin",ex.getMessage());
+    }
   }
 
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+   try{
     if (action.equals("register")) {
       try {
             PushIOManager pushIOManager = PushIOManager.getInstance(cordova.getActivity().getWindow().getContext());
@@ -56,12 +59,15 @@ public class PushIoUtils extends CordovaPlugin {
                   pushIOManager.setPreference("IMEI_NUMBER", str);
               }
         } catch (Exception ex) {
-            //Log.d("Push Io", "Preferences in not set " + ex.getMessage());
+            Log.d("Push Io", "Preferences in not set " + ex.getMessage());
         }
     } else if(action.equals("getNotificationData")){
 		final PluginResult result = new PluginResult(PluginResult.Status.OK, NotificationBroadcastReceiver.getPreference(cordova.getActivity().getWindow().getContext(), "NotificationData", ""));
         callbackContext.sendPluginResult(result);
-	}
+  }
+}catch(Exception e){
+  Log.d("error in PushIO",e.getMessage());
+}
     return true;
   }
 

@@ -31,12 +31,16 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
           // obj.put("message", intent.getStringExtra("alert"));
 
           String messageId="";
-          String title=intent.getStringExtra("alert").toString();
-          String message=intent.getStringExtra("body").toString();
+          String title=intent.getStringExtra("alert");
+          String message=intent.getStringExtra("body");
           //intent.getStringExtra("message").toString();
           Long tmp=intent.getLongExtra("google.sent_time",0);
-          String timeStamp = tmp.toString();
-
+          String timeStamp = "";
+          if(tmp== null)
+          {
+            tmp = System.currentTimeMillis();
+          }
+          timeStamp=tmp.toString();
           DBHelper dbHelper=new DBHelper(context);
           // Cursor res=dbHelper.getData(1);
           // res.moveToFirst();
@@ -45,8 +49,9 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
           if(dbHelper.insertNotification(messageId,title,message,timeStamp)){
               //insertion done
+             // Toast.makeText(context,"insertion done",7).show();
            }else{
-             
+           // Toast.makeText(context,"insertion not done",7).show();
            }
           // if (!"".equalsIgnoreCase(getPreference(context, "NotificationData", ""))) {
           //   array = new JSONArray(getPreference(context, "NotificationData", ""));
@@ -57,6 +62,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
           // addPreference(context, "NotificationData", array.toString());
         } catch (Exception e) {
           Log.d("class", "Not a string", e);
+         // Toast.makeText(context,"exception in receive "+e.getMessage(),30).show();
         }
       }
     }
