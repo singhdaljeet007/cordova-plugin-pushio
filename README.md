@@ -1,4 +1,4 @@
-Cordova Pushio Plugin
+Cordova Plugin Pushio
 ======================
 
 Installation
