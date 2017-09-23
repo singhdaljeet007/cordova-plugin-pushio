@@ -1,4 +1,20 @@
-Cordova Plugin Template
-======
+Cordova Pushio Plugin
+======================
 
-This is a cordova plugin for building oracle push notification on iOS and Android.
+Installation
+$ ionic cordova plugin add https://github.com/singhdaljeet007/cordova-plugin-pushio.git
+
+Usage
+declare var pushio: any;
+@Component({
+  templateUrl: 'app.html'
+})
+export class MyApp {
+….
+pushio.init(deviceImei);
+pushio.register(custId);
+…
+}
+
+Supported Platforms
+Android Only
