@@ -46,13 +46,16 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
           // res.moveToFirst();
           // String name = res.getString(res.getColumnIndex("customerName"));
           // Toast.makeText(context,name,7).show();
+          if(title==null || title==""){
 
-          if(dbHelper.insertNotification(messageId,title,message,timeStamp)){
+          }else{
+            if(dbHelper.insertNotification(messageId,title,message,timeStamp)){
               //insertion done
              // Toast.makeText(context,"insertion done",7).show();
            }else{
            // Toast.makeText(context,"insertion not done",7).show();
            }
+          }
           // if (!"".equalsIgnoreCase(getPreference(context, "NotificationData", ""))) {
           //   array = new JSONArray(getPreference(context, "NotificationData", ""));
           // } else {
