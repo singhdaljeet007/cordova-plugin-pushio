@@ -32,3 +32,5 @@ Supported Platforms
 ======================
 
 Android Only
+
+NB: Copyright@DScorporations. All rights reserved.
